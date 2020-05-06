@@ -20,6 +20,8 @@ const {Users} = props;
             </Card.Meta>
             <Card.Description>
             {follower.bio}
+            <br></br>
+            {follower.login}
           </Card.Description>
           </Card.Content>
           <Card.Content extra>

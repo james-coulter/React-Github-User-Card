@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -19,9 +19,22 @@ export default class App extends React.Component {
       cardInfo: [],
       followersInfo: [],
       Users: [],
+      value: '',
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+  handleChange(event) {
+    this.setState({value: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    alert('A name was submitted: ' + this.state.value)
+  }
 
   componentDidMount() {
     fetch('https://api.github.com/users/james-coulter')
@@ -93,10 +106,15 @@ export default class App extends React.Component {
             </a>
           </Card.Content>
         </Card>
+  
       </div>
       <UserCard Users={this.state.Users}/>
-
-
+      <div className="chart"> 
+      <input placeholder='Enter username' type='text' value={this.state.value} onChange={this.handleChange} />
+      {this.state.value == '' ? <><h3>James-Coulter's Contribution Chart</h3><img src='https://ghchart.rshah.org/james-coulter' alt="username's Github chart" /></> :
+     <> <h3>{this.state.value}'s Contribution Chart</h3>
+  <img src={`https://ghchart.rshah.org/${this.state.value}`} alt="username's Github chart" /></> }
+      </div>
     </div>
   );
 }
